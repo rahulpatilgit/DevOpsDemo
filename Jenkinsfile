@@ -1,5 +1,9 @@
 pipeline{
     agent any
+    tools {
+        maven 'maven381'
+        jdk 'Java'
+    }
     stages{
         stage("Pull"){
             steps{
@@ -8,7 +12,7 @@ pipeline{
         }
         stage("Build"){
             steps{
-                sh 'mvn -B -DskipTests clean package'
+                sh 'mvn clean package'
                }
             }
         stage("Deploy"){
