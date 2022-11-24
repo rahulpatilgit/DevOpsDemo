@@ -10,21 +10,21 @@ pipeline{
                 git 'https://github.com/rahulpatilgit/DevOpsDemo.git'
             }
         }
-        stage("Build"){
-            steps{
-                sh 'mvn clean package'
-               }
-            }
-        stage('Scan') {
+        stage("build & SonarQube analysis") {
+            agent any
             steps {
-                withSonarQubeEnv('Sonarqube') {
-                    sh "/opt/sonar/"
-                }
-                timeout(time: 10, unit: 'MINUTES') {
-                    waitForQualityGate abortPipeline: true
-                }
+              withSonarQubeEnv('sonarqube') {
+                sh 'mvn clean package sonar:sonar'
+              }
             }
-        }
+          }
+        stage("Quality Gate") {
+            steps {
+              timeout(time: 1, unit: 'HOURS') {
+                waitForQualityGate abortPipeline: true
+              }
+            }
+          }
         stage("Deploy"){
             steps{
                 sshagent(['tomcat']) {
