@@ -15,6 +15,16 @@ pipeline{
                 sh 'mvn clean package'
                }
             }
+        stage('Scan') {
+            steps {
+                withSonarQubeEnv('sonarqube') {
+                    sh "/opt/sonar/"
+                }
+                timeout(time: 10, unit: 'MINUTES') {
+                    waitForQualityGate abortPipeline: true
+                }
+            }
+        }
         stage("Deploy"){
             steps{
                 sshagent(['tomcat']) {
