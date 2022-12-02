@@ -25,10 +25,9 @@ pipeline{
                 }
             }
         }
-        post {
-            success {
-                slackSend "Build Status - ${env.JOB_NAME} ${env.BUILD_NUMBER} (<${env.BUILD_URL}|Open>)"
-
+        stage("Notify Status") {
+            steps{
+                slackSend channel: 'Jenkins-updates', message: 'Hello World'
             }
         }
     }
