@@ -15,6 +15,7 @@ pipeline{
             steps {
               withSonarQubeEnv('Sonarqube') {
                 sh 'mvn clean package sonar:sonar'
+                slackSend "Build Started - ${env.JOB_NAME} ${env.BUILD_NUMBER} (<${env.BUILD_URL}|Open>)"
               }
             }
           }
