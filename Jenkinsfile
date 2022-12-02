@@ -27,7 +27,7 @@ pipeline{
         }
         stage("Notify Status") {
             steps{
-                slackSend channel: 'Jenkins-updates', message: "Build Status - ${env.JOB_NAME} ${env.BUILD_NUMBER} (<${env.BUILD_URL}|Open>)"
+                slackSend channel: 'Jenkins-updates', message: "Build Status - ${env.JOB_NAME} ${env.BUILD_STATUS} (<${env.BUILD_URL}|Open>)"
             }
         }
     }
