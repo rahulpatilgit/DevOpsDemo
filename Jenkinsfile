@@ -17,9 +17,6 @@ pipeline{
                 sh 'mvn clean package sonar:sonar'
               }
             }
-            steps {
-                slackSend "Build Started - ${env.JOB_NAME} ${env.BUILD_NUMBER} (<${env.BUILD_URL}|Open>)"
-            }
           }
         stage("Deploy"){
             steps{
@@ -27,6 +24,9 @@ pipeline{
                     sh "scp -o StrictHostKeyChecking=no /var/jenkins/workspace/Ass-3-Jenkinsfile/target/DevOpsDemo.war ec2-user@172.31.12.203:/tomcat/tomcat/webapps"
 
                 }
+            }
+            steps {
+                slackSend "Build Started - ${env.JOB_NAME} ${env.BUILD_NUMBER} (<${env.BUILD_URL}|Open>)"
             }
         }
     }
