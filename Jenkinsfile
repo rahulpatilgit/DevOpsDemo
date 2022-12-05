@@ -19,7 +19,7 @@ pipeline{
             }
           }
         stage("Nexus Upload"){
-            step{
+            steps{
                 nexusArtifactUploader artifacts: [[artifactId: 'Jenkins', classifier: '', file: './target/DevOpsDemo.war', type: 'WAR']], credentialsId: 'Nexus', groupId: 'com.blazeclan', nexusUrl: 'ec2-13-126-212-136.ap-south-1.compute.amazonaws.com:8081/', nexusVersion: 'nexus3', protocol: 'http', repository: 'maven-snapshots', version: '0.0.1-SNAPSHOT'
             }
         }
